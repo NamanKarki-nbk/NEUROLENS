@@ -1,0 +1,6 @@
+outs:
+- md5: 720a9055ba27e7b65f21af8b10758cac.dir
+  size: 1091201623
+  nfiles: 35366
+  hash: md5
+  path: augmented
