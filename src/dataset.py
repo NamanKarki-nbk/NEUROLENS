@@ -51,7 +51,7 @@ class BrainTumorDataset(Dataset):
         label = self.labels[index]
         return img, label
     
-def get_dataloader(image_dir, batch_size=32, num_workers=4, transforms=None):
+def get_dataloader(image_dir, shuffle = True ,batch_size=32, num_workers=4, transforms=None):
     dataset = BrainTumorDataset(image_dir, transforms=transforms)
-    dataloader = DataLoader(dataset, batch_size=batch_size, shuffle=True, num_workers=num_workers, pin_memory=True)
+    dataloader = DataLoader(dataset, batch_size=batch_size, shuffle=shuffle, num_workers=num_workers, pin_memory=True)
     return dataloader
