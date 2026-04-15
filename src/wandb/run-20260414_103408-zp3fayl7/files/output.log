@@ -1,0 +1,5 @@
+Trainable params: 6,196,472
+Trial 3 | Epoch 1/10 | Val Acc: 0.7529 | Val F1: 0.7651
+Trial 3 | Epoch 2/10 | Val Acc: 0.8144 | Val F1: 0.8235
+Trial 3 | Epoch 3/10 | Val Acc: 0.8279 | Val F1: 0.8350
+Trial 3 | Epoch 4/10 | Val Acc: 0.8423 | Val F1: 0.8500

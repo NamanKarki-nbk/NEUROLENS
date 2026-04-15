@@ -1,0 +1,40 @@
+{
+  "os": "Windows-11-10.0.26200-SP0",
+  "python": "CPython 3.12.12",
+  "startedAt": "2026-04-14T10:53:33.560785Z",
+  "program": "F:\\Naman\\NeuroLens\\src\\final_train.py",
+  "codePath": "src\\final_train.py",
+  "codePathLocal": "final_train.py",
+  "git": {
+    "remote": "git@github.com:NamanKarki-nbk/NEUROLENS.git",
+    "commit": "10d29d567163b308750d310975a56ed77327f056"
+  },
+  "email": "namankarki.nbk@gmail.com",
+  "root": "F:\\Naman\\NeuroLens\\src",
+  "host": "Naman_Karki",
+  "executable": "C:\\Users\\noman\\anaconda3\\envs\\mlai\\python.exe",
+  "cpu_count": 10,
+  "cpu_count_logical": 16,
+  "gpu": "NVIDIA GeForce RTX 4050 Laptop GPU",
+  "gpu_count": 1,
+  "disk": {
+    "/": {
+      "total": "511792115712",
+      "used": "236168859648"
+    }
+  },
+  "memory": {
+    "total": "16869548032"
+  },
+  "gpu_nvidia": [
+    {
+      "name": "NVIDIA GeForce RTX 4050 Laptop GPU",
+      "memoryTotal": "6439305216",
+      "cudaCores": 2560,
+      "architecture": "Ada",
+      "uuid": "GPU-3a80723c-7e68-b680-40da-dc8971209c08"
+    }
+  ],
+  "cudaVersion": "13.2",
+  "writerId": "j90exlxyn1d242qwty6wlhy63o7bmjok"
+}

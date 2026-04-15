@@ -1,0 +1,42 @@
+stages:
+  train:
+    cmd: python src/final_train.py
+
+    deps:
+      - src/final_train.py
+      - src/dataset.py
+      - src/eval.py
+      - src/efficientnet_b4/efficientb4.py
+      - data/augmented/train
+      - data/augmented/val
+      - params.yaml
+
+    params:
+      - params.yaml:
+          - train.lr
+          - train.dropout
+          - train.unfreeze_n
+          - train.loss_type
+          - train.epochs
+
+    outs:
+      - models/efficientnet_models/best_model_efficientnet.pth
+
+    metrics:
+      - src/train_metrics.json:
+          cache: false
+
+  test:
+    cmd: python src/test.py
+
+    deps:
+      - src/test.py
+      - src/dataset.py
+      - src/eval.py
+      - src/efficientnet_b4/efficientb4.py
+      - models/efficientnet_models/best_model_efficientnet.pth
+      - data/augmented/test
+
+    metrics:
+      - src/test_metrics.json:
+          cache: false

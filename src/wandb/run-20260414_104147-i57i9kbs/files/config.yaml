@@ -1,0 +1,79 @@
+_wandb:
+    value:
+        cli_version: 0.25.1
+        e:
+            uaa9rs6t6mzpkiki5x8i0a6239up230b:
+                codePath: src\train.py
+                codePathLocal: train.py
+                cpu_count: 10
+                cpu_count_logical: 16
+                cudaVersion: "13.2"
+                disk:
+                    /:
+                        total: "511792115712"
+                        used: "236168761344"
+                email: namankarki.nbk@gmail.com
+                executable: C:\Users\noman\anaconda3\envs\mlai\python.exe
+                git:
+                    commit: 10d29d567163b308750d310975a56ed77327f056
+                    remote: git@github.com:NamanKarki-nbk/NEUROLENS.git
+                gpu: NVIDIA GeForce RTX 4050 Laptop GPU
+                gpu_count: 1
+                gpu_nvidia:
+                    - architecture: Ada
+                      cudaCores: 2560
+                      memoryTotal: "6439305216"
+                      name: NVIDIA GeForce RTX 4050 Laptop GPU
+                      uuid: GPU-3a80723c-7e68-b680-40da-dc8971209c08
+                host: Naman_Karki
+                memory:
+                    total: "16869548032"
+                os: Windows-11-10.0.26200-SP0
+                program: F:\Naman\NeuroLens\src\train.py
+                python: CPython 3.12.12
+                root: F:\Naman\NeuroLens\src
+                startedAt: "2026-04-14T04:56:47.267832Z"
+                writerId: uaa9rs6t6mzpkiki5x8i0a6239up230b
+        m: []
+        python_version: 3.12.12
+        t:
+            "1":
+                - 1
+                - 5
+                - 35
+                - 41
+                - 49
+                - 53
+                - 80
+                - 105
+            "2":
+                - 1
+                - 5
+                - 35
+                - 41
+                - 49
+                - 53
+                - 80
+                - 105
+            "3":
+                - 2
+                - 13
+                - 16
+            "4": 3.12.12
+            "5": 0.25.1
+            "8":
+                - 3
+            "10":
+                - 20
+            "12": 0.25.1
+            "13": windows-amd64
+dropout:
+    value: 0.3119081840851825
+gamma:
+    value: 2.208428097164551
+loss_type:
+    value: focal
+lr:
+    value: 0.0008012071706629027
+unfreeze_n:
+    value: 5

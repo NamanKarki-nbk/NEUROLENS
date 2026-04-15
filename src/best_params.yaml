@@ -1,0 +1,7 @@
+train:
+  dropout: 0.3119081840851825
+  epochs: 10
+  gamma: 2.208428097164551
+  loss_type: focal
+  lr: 0.0008012071706629027
+  unfreeze_n: 5

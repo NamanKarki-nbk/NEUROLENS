@@ -14,7 +14,7 @@ def evaluate(model, loader, criterion, device):
         for images, labels in loader:
             images, labels = images.to(device), labels.to(device)
 
-            with autocast():
+            with autocast(device_type=device):
                 outputs = model(images)
                 loss = criterion(outputs, labels)
 

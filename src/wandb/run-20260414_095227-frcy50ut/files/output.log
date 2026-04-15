@@ -1,0 +1,8 @@
+Trainable params: 18,396,908
+Trial 0 | Epoch 1/10 | Val Acc: 0.9760 | Val F1: 0.9760
+  ✓ New best model saved! F1: 0.9760
+Trial 0 | Epoch 2/10 | Val Acc: 0.9750 | Val F1: 0.9748
+Trial 0 | Epoch 3/10 | Val Acc: 0.9846 | Val F1: 0.9843
+  ✓ New best model saved! F1: 0.9843
+Trial 0 | Epoch 4/10 | Val Acc: 0.9827 | Val F1: 0.9820
+Trial 0 | Epoch 5/10 | Val Acc: 0.9817 | Val F1: 0.9818

@@ -1,0 +1,19 @@
+Trainable params: 18,199,322
+Epoch 1/10 | Train Loss: 0.1049 | Val Loss: 0.0516 | Acc: 0.9308 | F1: 0.9349
+✅ New best model saved with F1: 0.9349
+Epoch 2/10 | Train Loss: 0.0299 | Val Loss: 0.0312 | Acc: 0.9683 | F1: 0.9689
+✅ New best model saved with F1: 0.9689
+Epoch 3/10 | Train Loss: 0.0144 | Val Loss: 0.0364 | Acc: 0.9683 | F1: 0.9684
+Epoch 4/10 | Train Loss: 0.0090 | Val Loss: 0.0310 | Acc: 0.9769 | F1: 0.9772
+✅ New best model saved with F1: 0.9772
+Epoch 5/10 | Train Loss: 0.0082 | Val Loss: 0.0331 | Acc: 0.9808 | F1: 0.9806
+✅ New best model saved with F1: 0.9806
+Epoch 6/10 | Train Loss: 0.0046 | Val Loss: 0.0392 | Acc: 0.9798 | F1: 0.9795
+Epoch 7/10 | Train Loss: 0.0042 | Val Loss: 0.0256 | Acc: 0.9837 | F1: 0.9836
+✅ New best model saved with F1: 0.9836
+Epoch 8/10 | Train Loss: 0.0038 | Val Loss: 0.0457 | Acc: 0.9856 | F1: 0.9855
+✅ New best model saved with F1: 0.9855
+Epoch 9/10 | Train Loss: 0.0034 | Val Loss: 0.0548 | Acc: 0.9788 | F1: 0.9780
+Epoch 10/10 | Train Loss: 0.0033 | Val Loss: 0.0504 | Acc: 0.9846 | F1: 0.9838
+
+✓ Training complete! Best Val F1: 0.9855

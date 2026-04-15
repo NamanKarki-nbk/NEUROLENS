@@ -1,0 +1,84 @@
+schema: '2.0'
+stages:
+  train:
+    cmd: python src/final_train.py
+    deps:
+    - path: data/augmented/train
+      hash: md5
+      md5: 297e41a78a8304ad94c4b717e6903dfb.dir
+      size: 1024602985
+      nfiles: 33284
+    - path: data/augmented/val
+      hash: md5
+      md5: 52858ea2af12b4d7162b8b28501d37cf.dir
+      size: 33275399
+      nfiles: 1040
+    - path: params.yaml
+      hash: md5
+      md5: 385baa4639f5d7c52c98519b25a5e037
+      size: 147
+    - path: src/dataset.py
+      hash: md5
+      md5: e5c47f2b952262156d8e06046c2c0259
+      size: 1810
+    - path: src/efficientnet_b4/efficientb4.py
+      hash: md5
+      md5: 0337b94ecaee957b6de6788d953cde21
+      size: 1461
+    - path: src/eval.py
+      hash: md5
+      md5: c60ef0afee3b7ba70487d056f98edbc1
+      size: 1028
+    - path: src/final_train.py
+      hash: md5
+      md5: 6e0b076dbdb6222dfe6015fa88940a81
+      size: 6110
+    params:
+      params.yaml:
+        train.dropout: 0.3119081840851825
+        train.epochs: 10
+        train.loss_type: focal
+        train.lr: 0.0008012071706629027
+        train.unfreeze_n: 5
+    outs:
+    - path: models/efficientnet_models/best_model_efficientnet.pth
+      hash: md5
+      md5: fd5344d963fceb6f7638e17e3e658840
+      size: 74643671
+    - path: src/train_metrics.json
+      hash: md5
+      md5: ce4a0ff829b90707a0c0fff84b7e4176
+      size: 129
+  test:
+    cmd: python src/test.py
+    deps:
+    - path: data/augmented/test
+      hash: md5
+      md5: b3900b1645aaf3afa1b78112a7817c85.dir
+      size: 33323239
+      nfiles: 1042
+    - path: models/efficientnet_models/best_model_efficientnet.pth
+      hash: md5
+      md5: fd5344d963fceb6f7638e17e3e658840
+      size: 74643671
+    - path: src/dataset.py
+      hash: md5
+      md5: e5c47f2b952262156d8e06046c2c0259
+      size: 1810
+    - path: src/efficientnet_b4/efficientb4.py
+      hash: md5
+      md5: 0337b94ecaee957b6de6788d953cde21
+      size: 1461
+    - path: src/eval.py
+      hash: md5
+      md5: c60ef0afee3b7ba70487d056f98edbc1
+      size: 1028
+    - path: src/test.py
+      hash: md5
+      md5: 981e4b4ba215f480c5b9e1614395d11c
+      size: 1701
+    outs:
+    - path: src/test_metrics.json
+      hash: md5
+      md5: cb2368f6d2d3b40f6830fb3b3f52acd1
+      size: 115
