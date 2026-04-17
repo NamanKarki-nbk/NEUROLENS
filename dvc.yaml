@@ -1,4 +1,7 @@
 stages:
+  # ---------------------------
+  # EfficientNet
+  # ---------------------------
   train:
     cmd: python src/final_train.py
 
@@ -26,6 +29,7 @@ stages:
       - src/train_metrics.json:
           cache: false
 
+
   test:
     cmd: python src/test.py
 
@@ -39,4 +43,80 @@ stages:
 
     metrics:
       - src/test_metrics.json:
+          cache: false
+
+
+  # ---------------------------
+  # ViT
+  # ---------------------------
+  vit_train:
+    cmd: python src/vit_train.py
+
+    deps:
+      - src/vit_train.py           
+      - src/dataset.py
+      - src/vit_eval.py
+      - src/vit_transformer/vit.py
+      - data/augmented/train       
+      - data/augmented/val
+
+    outs:
+      - models/vit_models/vit_best_model.pth
+
+    metrics:
+      - src/vit_train_metrics.json:  
+          cache: false
+
+
+  vit_test:
+    cmd: python src/vit_test.py      
+
+    deps:
+      - src/vit_test.py              
+      - src/dataset.py
+      - src/vit_eval.py
+      - src/vit_transformer/vit.py
+      - models/vit_models/vit_best_model.pth
+      - data/augmented/test
+
+    metrics:
+      - src/vit_test_metrics.json:
+          cache: false
+  
+  # ---------------------------
+  # ViT Final Train
+  # ---------------------------
+  vit_final_train:
+    cmd: python src/vit_train_final.py
+    deps:
+      - src/vit_train_final.py
+      - src/dataset.py
+      - src/vit_eval.py
+      - src/vit_transformer/vit.py
+      - data/augmented/train
+      - data/augmented/val
+      - VIT_best_params.yaml
+    params:
+      - VIT_best_params.yaml:
+          - train.lr
+          - train.dropout
+          - train.unfreeze_n
+          - train.epochs
+    outs:
+      - models/vit_models/final_best_model_vit.pth
+    metrics:
+      - src/vit_final_train_metrics.json:
+          cache: false
+
+  vit_final_test:
+    cmd: python src/vit_final_test.py     # ← separate test file
+    deps:
+      - src/vit_final_test.py
+      - src/dataset.py
+      - src/vit_eval.py
+      - src/vit_transformer/vit.py
+      - models/vit_models/final_best_model_vit.pth
+      - data/augmented/test
+    metrics:
+      - src/vit_final_test_metrics.json:  # ← final model metrics
           cache: false
