@@ -2,3 +2,6 @@ brain-tumor-dataset
 splits
 augmented
 test.ipynb
+models
+params.yaml
+wandb

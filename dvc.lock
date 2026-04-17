@@ -82,3 +82,84 @@ stages:
       hash: md5
       md5: cb2368f6d2d3b40f6830fb3b3f52acd1
       size: 115
+  vit_final_train:
+    cmd: python src/vit_train_final.py
+    deps:
+    - path: VIT_best_params.yaml
+      hash: md5
+      md5: cf929f29d3919cd5ad9e643a0dff78d7
+      size: 100
+    - path: data/augmented/train
+      hash: md5
+      md5: 297e41a78a8304ad94c4b717e6903dfb.dir
+      size: 1024602985
+      nfiles: 33284
+    - path: data/augmented/val
+      hash: md5
+      md5: 52858ea2af12b4d7162b8b28501d37cf.dir
+      size: 33275399
+      nfiles: 1040
+    - path: src/dataset.py
+      hash: md5
+      md5: e5c47f2b952262156d8e06046c2c0259
+      size: 1810
+    - path: src/vit_eval.py
+      hash: md5
+      md5: bd6eb02d21fcf1313bb654dd4d97f0f7
+      size: 973
+    - path: src/vit_train_final.py
+      hash: md5
+      md5: 1e860114297a4165f17ba76a671ded64
+      size: 3774
+    - path: src/vit_transformer/vit.py
+      hash: md5
+      md5: 79216caafd2a4103e75e24ad93a65552
+      size: 1621
+    params:
+      VIT_best_params.yaml:
+        train.dropout: 0.3310474675875413
+        train.epochs: 10
+        train.lr: 0.00032317932933517593
+        train.unfreeze_n: 5
+    outs:
+    - path: models/vit_models/final_best_model_vit.pth
+      hash: md5
+      md5: 0b515f86b58c42d13daedfe8b69d9756
+      size: 351474074
+    - path: src/vit_final_train_metrics.json
+      hash: md5
+      md5: 44af29202196c2b9c64426655273b344
+      size: 125
+  vit_final_test:
+    cmd: python src/vit_final_test.py
+    deps:
+    - path: data/augmented/test
+      hash: md5
+      md5: b3900b1645aaf3afa1b78112a7817c85.dir
+      size: 33323239
+      nfiles: 1042
+    - path: models/vit_models/final_best_model_vit.pth
+      hash: md5
+      md5: 0b515f86b58c42d13daedfe8b69d9756
+      size: 351474074
+    - path: src/dataset.py
+      hash: md5
+      md5: e5c47f2b952262156d8e06046c2c0259
+      size: 1810
+    - path: src/vit_eval.py
+      hash: md5
+      md5: bd6eb02d21fcf1313bb654dd4d97f0f7
+      size: 973
+    - path: src/vit_final_test.py
+      hash: md5
+      md5: 12138bf6228b97df51be97b45aa07a8e
+      size: 1985
+    - path: src/vit_transformer/vit.py
+      hash: md5
+      md5: 79216caafd2a4103e75e24ad93a65552
+      size: 1621
+    outs:
+    - path: src/vit_final_test_metrics.json
+      hash: md5
+      md5: 7895dcf4160cd0dbd72da15b74901fa1
+      size: 114
