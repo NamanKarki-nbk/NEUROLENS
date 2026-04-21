@@ -29,6 +29,6 @@ def load_model():
 def init_models():
     eff_model, vit_model = load_model()
     
-    MODEL_REGISTRY["Efficient_et"] = eff_model
+    MODEL_REGISTRY["Efficient_net"] = eff_model
     MODEL_REGISTRY["VIT"]= vit_model
     print("Models loaded and registered successfully")
