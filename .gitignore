@@ -5,3 +5,5 @@ test.ipynb
 models
 params.yaml
 wandb
+.env
+chroma_db
