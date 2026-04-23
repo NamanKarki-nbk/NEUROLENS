@@ -34,3 +34,4 @@ def preprocess(file, transform = transform, device=DEVICE):
     
     image = image.unsqueeze(0).to(device)
     return image
+

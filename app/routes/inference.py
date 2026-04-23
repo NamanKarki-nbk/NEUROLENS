@@ -6,7 +6,7 @@ import torch.nn.functional as F
 from utils.preprocess import preprocess
 from model_loader import MODEL_REGISTRY
 from src.rag.rag_pipeline import run_rag
-
+from src.efficientnet_b4.efficientb4 import DEVICE
 router = APIRouter()
 
 CLASS_NAMES = {
@@ -161,3 +161,4 @@ async def ensemble_and_explain(
         },
         "explanation": explanation
     }
+
