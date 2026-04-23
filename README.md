@@ -3,6 +3,7 @@
 ## Abstract
 
 NeuroLens is an advanced computer vision and Retrieval-Augmented Generation (RAG) system designed for domain-specific research and analysis. It leverages an ensemble of EfficientNet-B4 and Vision Transformer (ViT) models for image classification, and integrates a RAG pipeline for context-aware querying — providing a robust, scalable solution for research-driven applications.
+This project specifically focuses on brain tumor classification, utilizing state-of-the-art deep learning models to assist in medical imaging analysis and diagnosis.
 
 ---
 
