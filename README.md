@@ -1,21 +1,25 @@
 # NeuroLens
 
 ## Abstract
-NeuroLens is an advanced computer vision and Retrieval-Augmented Generation (RAG) system designed for domain-specific research and analysis. By leveraging an ensemble of EfficientNet-B4 and Vision Transformer (ViT) models for image classification and analysis, and integrating a RAG pipeline for context-aware querying, NeuroLens provides a robust solution for research-driven applications.
+
+NeuroLens is an advanced computer vision and Retrieval-Augmented Generation (RAG) system designed for domain-specific research and analysis. It leverages an ensemble of EfficientNet-B4 and Vision Transformer (ViT) models for image classification, and integrates a RAG pipeline for context-aware querying — providing a robust, scalable solution for research-driven applications.
 
 ---
 
 ## Key Features
 
-- **Vision Ensemble**: Combines EfficientNet-B4 and ViT-Base for enhanced image classification accuracy. The ensemble logic uses weighted averaging of predictions to leverage the strengths of both architectures.
-- **RAG Pipeline**: Integrates LangChain with a vector database for efficient retrieval of domain-specific research context. Supports ingestion of PDFs and text documents for embedding and querying.
-- **Tech Stack**: Built with Python, FastAPI, PyTorch, Albumentations, SQLAlchemy, and PostgreSQL for a scalable and efficient system.
+**Vision Ensemble** — Combines EfficientNet-B4 and ViT-Base for enhanced image classification accuracy. The ensemble uses weighted averaging of predictions to leverage the complementary strengths of both architectures.
+
+**RAG Pipeline** — Integrates LangChain with a vector database for efficient retrieval of domain-specific research context. Supports ingestion of PDFs and text documents for embedding and querying.
+
+**Production-Ready Stack** — Built with Python, FastAPI, PyTorch, Albumentations, LangChain, and Streamlit for a modular, efficient, and scalable system.
 
 ---
 
 ## System Architecture
 
 ### EfficientNet-B4
+
 ```mermaid
 graph TD
     A[Input Image] --> B[MBConv Blocks]
@@ -26,6 +30,7 @@ graph TD
 ```
 
 ### Vision Transformer (ViT)
+
 ```mermaid
 graph TD
     A[Input Image] --> B[Patch Embedding]
@@ -36,9 +41,10 @@ graph TD
 ```
 
 ### RAG System Flow
+
 ```mermaid
 graph TD
-    A[PDF/Text Input] --> B[Embedding Generation]
+    A[PDF / Text Input] --> B[Embedding Generation]
     B --> C[Vector Database]
     C --> D[User Query]
     D --> E[Retrieval]
@@ -49,12 +55,14 @@ graph TD
 
 ## Installation
 
-### Using `pip`
+### Standard (pip)
+
 ```bash
 pip install -e .
 ```
 
-### Conda Environment Setup
+### Conda Environment
+
 ```bash
 conda create -n neurolens python=3.9
 conda activate neurolens
@@ -63,15 +71,52 @@ pip install -r requirements.txt
 
 ---
 
-## API Documentation
+## Environment Variables
 
-### FastAPI Endpoints
+Create a `.env` file in the project root with the following keys:
 
-- **`/inference`**: Perform image classification using the vision ensemble.
-- **`/query`**: Submit a query to the RAG pipeline for context-aware responses.
+```env
+GROQ_API_KEY=your_groq_api_key
+HUGGINGFACEHUB_API_TOKEN=your_huggingface_token
+WANDB_API_KEY=your_wandb_key
+```
+
+Never commit this file to version control.
 
 ---
 
-## License
+## API Reference
 
-This project is licensed under the MIT License. See the LICENSE file for details.
+NeuroLens exposes the following REST endpoints via FastAPI:
+
+| Endpoint | Method | Description |
+|---|---|---|
+| `/inference` | `POST` | Perform image classification using the vision ensemble |
+| `/query` | `POST` | Submit a query to the RAG pipeline for context-aware responses |
+
+Interactive API documentation is available at `http://localhost:8000/docs` when running locally.
+
+---
+
+## Deployment
+
+NeuroLens is configured for deployment on Hugging Face Spaces using Docker. The application runs Streamlit on port `7860` and FastAPI on port `8000`.
+
+To deploy, push all project files including `Dockerfile`, `start.sh`, and `requirements.txt` to your Space repository. Add all environment variables under Settings > Repository Secrets.
+
+---
+
+## Tech Stack
+
+| Category | Technologies |
+|---|---|
+| Vision Models | EfficientNet-B4, Vision Transformer (ViT) |
+| Training & Augmentation | PyTorch, Torchvision, Albumentations |
+| RAG & LLM | LangChain, LangChain-Groq, ChromaDB, Sentence Transformers |
+| API | FastAPI, Uvicorn |
+| UI | Streamlit |
+| Experiment Tracking | Weights & Biases (wandb), Optuna |
+| Utilities | OpenCV, Pillow, NumPy, scikit-learn, Matplotlib, Seaborn |
+
+---
+
