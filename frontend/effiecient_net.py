@@ -5,88 +5,76 @@ import requests
 API_URL = "http://127.0.0.1:8000/analyze-and-explain/Efficient_net"
 
 
-def show():
-    st.title("EFFICIENT NET ANALYSIS")
-    st.markdown("---")
+def clean_explanation(exp):
+    if isinstance(exp, str):
+        return exp.strip()
+    if isinstance(exp, dict):
+        return str(exp.get("answer") or exp.get("result") or exp)
+    if isinstance(exp, list):
+        return str(exp[0]) if exp else "No explanation available"
+    return str(exp)
 
-    st.subheader(
-        "Analyze the image using EFFICIENT NET and get explanation through RAG system"
-    )
+
+def show():
+    st.title("EfficientNet Analysis")
     st.markdown("---")
 
     col1, col2 = st.columns([1, 1], gap="large")
 
-
+    # LEFT
     with col1:
-        st.subheader("Upload X-Ray")
+        st.subheader("Upload Image")
 
         uploaded = st.file_uploader(
-            "Select a brain X-ray image",
-            type=["jpg", "jpeg", "png"],
-            help="Upload image in JPG or PNG format"
+            "Select a brain scan",
+            type=["jpg", "jpeg", "png"]
         )
 
         if uploaded:
             image = Image.open(uploaded)
             st.image(image, caption="Uploaded Image", use_container_width=True)
 
-   
+    # RIGHT
     with col2:
-        st.subheader("Analysis Result")
+        st.subheader("Result")
 
-        if uploaded:
-            run = st.button("Analyze X-Ray", type="primary")
+        if uploaded and st.button("Analyze", type="primary"):
 
-            if run:
-                with st.spinner("Analyzing Image..."):
+            with st.spinner("Analyzing..."):
 
-                    try:
-                        files = {
-                            "file": (
-                                uploaded.name,
-                                uploaded.getvalue(),
-                                uploaded.type
-                            )
-                        }
-
-                        response = requests.post(
-                            API_URL,
-                            files=files,
-                            timeout=60
+                try:
+                    files = {
+                        "file": (
+                            uploaded.name,
+                            uploaded.getvalue(),
+                            uploaded.type
                         )
+                    }
 
-                        if response.status_code == 200:
-                            result = response.json()
+                    res = requests.post(API_URL, files=files, timeout=60)
 
-                            label = result.get("prediction")
-                            conf = result.get("confidence")
-                            prob = result.get("probabilities")
-                            exp = result.get("explanation")
+                    if res.status_code != 200:
+                        st.error(f"API Error: {res.status_code}")
+                        return
 
-                          
-                            st.success("Analysis Complete")
+                    data = res.json()
 
-                            st.markdown("### Prediction")
-                            st.write(label)
+                    label = data.get("prediction", "N/A")
+                    conf = data.get("confidence", 0)
+                    prob = data.get("probabilities", {})
+                    exp = clean_explanation(data.get("explanation"))
 
-                            st.markdown("### Confidence")
-                            st.write(f"{conf}%")
+                    st.success("Analysis Complete")
 
-                            st.markdown("### Explanation")
-                            st.write(exp)
+                    c1, c2 = st.columns(2)
+                    c1.metric("Prediction", label)
+                    c2.metric("Confidence", f"{conf}%")
 
-                            with st.expander("Probabilities"):
-                                st.json(prob)
+                    st.markdown("### Explanation")
+                    st.write(exp)
 
-                        else:
-                            st.error(f"API Error: {response.status_code}")
+                    with st.expander("Probabilities"):
+                        st.json(prob)
 
-                    except requests.exceptions.ConnectionError:
-                        st.error(
-                            "Cannot connect to backend.\n\n"
-                            "Run FastAPI with:\n"
-                            "`uvicorn api.main:app --reload`"
-                        )
-
-                    except Exception as e:
-                        st.error(f"Unexpected error: {str(e)}")
+                except Exception as e:
+                    st.error(str(e))

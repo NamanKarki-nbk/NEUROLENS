@@ -1,7 +1,5 @@
 stages:
-  # ---------------------------
-  # EfficientNet
-  # ---------------------------
+ 
   train:
     cmd: python src/final_train.py
 
@@ -46,9 +44,7 @@ stages:
           cache: false
 
 
-  # ---------------------------
-  # ViT
-  # ---------------------------
+
   vit_train:
     cmd: python src/vit_train.py
 
@@ -83,9 +79,7 @@ stages:
       - src/vit_test_metrics.json:
           cache: false
   
-  # ---------------------------
-  # ViT Final Train
-  # ---------------------------
+  
   vit_final_train:
     cmd: python src/vit_train_final.py
     deps:
@@ -109,7 +103,7 @@ stages:
           cache: false
 
   vit_final_test:
-    cmd: python src/vit_final_test.py     # ← separate test file
+    cmd: python src/vit_final_test.py     
     deps:
       - src/vit_final_test.py
       - src/dataset.py
@@ -118,5 +112,5 @@ stages:
       - models/vit_models/final_best_model_vit.pth
       - data/augmented/test
     metrics:
-      - src/vit_final_test_metrics.json:  # ← final model metrics
+      - src/vit_final_test_metrics.json: 
           cache: false

@@ -1,3 +1,5 @@
+# src/rag/rag_pipeline.py
+
 from src.rag.retriever import HybridRetriever
 from src.rag.reranker import rerank
 from src.rag.query_rewriter import rewrite_query
@@ -35,10 +37,11 @@ Instructions:
 - Be empathetic, calm, and reassuring
 - Do NOT use complex medical jargon
 - Keep the response under 200 words
-- Do NOT say "based on the context" or reference the documents"""
+- Do NOT say "based on the context" or reference the documents
+"""
 )
 
-# ── Chain (Prompt → LLM → Output) ───────────────────
+# ── Chain ───────────────────────────────────────────
 generation_chain = explanation_prompt | llm | StrOutputParser()
 
 # ── Label Mapping ───────────────────────────────────
@@ -49,11 +52,42 @@ CLASS_NAMES = {
     3: "Pituitary Tumor"
 }
 
-# ── Retriever (initialized once) ────────────────────
+# ── Retriever ───────────────────────────────────────
 retriever = HybridRetriever()
 
 
+# ── Helper: FORCE STRING OUTPUT ─────────────────────
+def _clean_llm_output(result) -> str:
+    """
+    Ensures the output is ALWAYS a clean string.
+    Handles dict, list, or unexpected structures.
+    """
+    if isinstance(result, str):
+        return result.strip()
+
+    if isinstance(result, dict):
+        # common LangChain keys
+        return str(
+            result.get("answer")
+            or result.get("result")
+            or result.get("content")
+            or result
+        ).strip()
+
+    if isinstance(result, list):
+        if len(result) == 0:
+            return "No explanation available"
+        return str(result[0]).strip()
+
+    return str(result).strip()
+
+
+# ── Main RAG Pipeline ───────────────────────────────
 def run_rag(prediction_idx: int) -> str:
+    """
+    Full RAG pipeline with guaranteed string output
+    """
+
     prediction = CLASS_NAMES.get(prediction_idx, "Unknown")
 
     print(f"\n── RAG Pipeline ──────────────────────────")
@@ -66,45 +100,53 @@ def run_rag(prediction_idx: int) -> str:
             "Please continue with regular checkups as advised by your doctor."
         )
 
-    # ── Step 1: Query rewriting ──────────────────────
-    queries = rewrite_query(prediction)
+    try:
+        # ── Step 1: Query rewriting ──────────────────
+        queries = rewrite_query(prediction)
 
-    # ── Step 2: Hybrid retrieval ─────────────────────
-    all_docs = []
-    for query in queries:
-        docs = retriever.retrieve(query, top_k=8)
-        all_docs.extend(docs)
+        # ── Step 2: Retrieval ────────────────────────
+        all_docs = []
+        for query in queries:
+            docs = retriever.retrieve(query, top_k=8)
+            all_docs.extend(docs)
 
-    # ── Deduplication ────────────────────────────────
-    seen = set()
-    unique_docs = []
-    for doc in all_docs:
-        if doc.page_content not in seen:
-            seen.add(doc.page_content)
-            unique_docs.append(doc)
+        # ── Deduplication ───────────────────────────
+        seen = set()
+        unique_docs = []
+        for doc in all_docs:
+            if doc.page_content not in seen:
+                seen.add(doc.page_content)
+                unique_docs.append(doc)
 
-    print(f"  Total unique docs retrieved: {len(unique_docs)}")
+        print(f"  Total unique docs: {len(unique_docs)}")
 
-    # ── Step 3: Reranking ────────────────────────────
-    base_query = f"What is {prediction} and what should a patient know?"
-    final_docs = rerank(base_query, unique_docs, top_k=5)
+        # ── Step 3: Reranking ───────────────────────
+        base_query = f"What is {prediction} and what should a patient know?"
+        final_docs = rerank(base_query, unique_docs, top_k=5)
 
-    # ── Step 4: Context ──────────────────────────────
-    context = "\n\n".join([doc.page_content for doc in final_docs])
+        # ── Step 4: Context ─────────────────────────
+        context = "\n\n".join(doc.page_content for doc in final_docs)
 
-    # ── Step 5: Generate explanation (LangChain) ────
-    explanation = generation_chain.invoke({
-        "prediction": prediction,
-        "context": context
-    })
+        # ── Step 5: Generation ──────────────────────
+        raw_output = generation_chain.invoke({
+            "prediction": prediction,
+            "context": context
+        })
 
-    print(f"  ✓ Explanation generated")
-    return explanation
+        # ✅ CRITICAL FIX HERE
+        explanation = _clean_llm_output(raw_output)
+
+        print(f"  ✓ Explanation generated")
+        return explanation
+
+    except Exception as e:
+        print(f"  ✗ RAG Error: {e}")
+        return f"Explanation unavailable: {str(e)}"
 
 
-# ── Test ────────────────────────────────────────────
+# ── Local Test ──────────────────────────────────────
 if __name__ == "__main__":
     for idx in [0, 1, 2, 3]:
         print(f"\n{'='*50}")
         result = run_rag(idx)
-        print(f"Response:\n{result}")
+        print(f"\nResponse:\n{result}\n")
